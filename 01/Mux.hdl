@@ -1,0 +1,42 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/01/Mux.hdl
+
+/**
+ * Multiplexor:
+ * out = a if sel == 0
+ *       b otherwise
+ */
+
+CHIP Mux {
+    IN a, b, sel;
+    OUT out;
+
+    PARTS:
+    // Put your code here:
+
+    // Using the truth table of multiplexer and sum of minterms, find out the
+    // expressions that we should sum:
+
+    // NOT(a) AND b AND sel
+    // a AND NOT(b) AND NOT(sel)
+    // a AND b AND NOT(sel)
+    // a AND b AND sel
+
+    // Sum those up (* is AND, + is OR):
+    // NOT(a) * b * sel + a * NOT(b) * NOT(sel) + a * b * NOT(sel) + a * b * sel
+
+    // collect the common elements together:
+    // a * NOT(sel)(b + NOT(b)) + b * sel(a + NOT(a))
+
+    // summing a value with it's NOT is 1, so the result would yield:
+    // a * NOT(sel) + b * sel
+
+    // in regular notation: (a AND NOT(sel)) OR (b AND sel)
+
+    Not (in=sel, out=notSel);
+    And (a=a, b=notSel, out=aNotSel);
+    And (a=b, b=sel, out=bSel);
+    Or (a=aNotSel, b=bSel, out=out);
+}
