@@ -1,0 +1,57 @@
+// This file is part of the materials accompanying the book
+// "The Elements of Computing Systems" by Nisan and Schocken,
+// MIT Press. Book site: www.idc.ac.il/tecs
+// File name: projects/03/b/RAM512.hdl
+
+/**
+ * Memory of 512 registers, each 16 bit-wide. Out holds the value
+ * stored at the memory location specified by address. If load==1, then
+ * the in value is loaded into the memory location specified by address
+ * (the loaded value will be emitted to out from the next time step onward).
+ */
+
+CHIP RAM512 {
+    IN in[16], load, address[9];
+    OUT out[16];
+
+    PARTS:
+
+    // address has 9 bits. Most significant 3 bits (address[6..8]) tells us
+    // which RAM64 we'll operate on and the least significant 6 bits
+    // (address[0..5]) tells us which register in that particular RAM64 we'll
+    // use. Check the comments in RAM64 for the rationale.
+
+    // Select which RAM64 to load to.
+    DMux8Way (in=load,
+              sel=address[6..8],
+              a=selectRam1,
+              b=selectRam2,
+              c=selectRam3,
+              d=selectRam4,
+              e=selectRam5,
+              f=selectRam6,
+              g=selectRam7,
+              h=selectRam8);
+
+    RAM64 (in=in, load=selectRam1, address=address[0..5], out=ram1Out);
+    RAM64 (in=in, load=selectRam2, address=address[0..5], out=ram2Out);
+    RAM64 (in=in, load=selectRam3, address=address[0..5], out=ram3Out);
+    RAM64 (in=in, load=selectRam4, address=address[0..5], out=ram4Out);
+    RAM64 (in=in, load=selectRam5, address=address[0..5], out=ram5Out);
+    RAM64 (in=in, load=selectRam6, address=address[0..5], out=ram6Out);
+    RAM64 (in=in, load=selectRam7, address=address[0..5], out=ram7Out);
+    RAM64 (in=in, load=selectRam8, address=address[0..5], out=ram8Out);
+
+    // Pipe only the output of the RAM64 defined by the relevant "address" bits
+    // to out.
+    Mux8Way16 (a=ram1Out,
+               b=ram2Out,
+               c=ram3Out,
+               d=ram4Out,
+               e=ram5Out,
+               f=ram6Out,
+               g=ram7Out,
+               h=ram8Out,
+               sel=address[6..8],
+               out=out);
+}

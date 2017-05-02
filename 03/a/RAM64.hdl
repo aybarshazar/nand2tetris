@@ -1,0 +1,77 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/03/a/RAM64.hdl
+
+/**
+ * Memory of 64 registers, each 16 bit-wide. Out holds the value
+ * stored at the memory location specified by address. If load==1, then
+ * the in value is loaded into the memory location specified by address
+ * (the loaded value will be emitted to out from the next time step onward).
+ */
+
+CHIP RAM64 {
+    IN in[16], load, address[6];
+    OUT out[16];
+
+    PARTS:
+
+    // address has 6 bits. Most significant 3 bits (address[3..5]) tells us
+    // which RAM8 we'll operate on and the least significant 3 bits
+    // (address[0..2]) tells us which register in that particular RAM8 we'll
+    // use. For example:
+
+    // The addresses of 8 registers in the first RAM8:
+    // 000 000
+    // 000 001
+    // 000 010
+    // 000 011
+    // 000 100
+    // 000 101
+    // 000 110
+    // 000 111
+
+    // The addresses of 8 registers in the second RAM8:
+    // 001 000
+    // 001 001
+    // 001 010
+    // 001 011
+    // 001 100
+    // 001 101
+    // 001 110
+    // 001 111
+
+    // Select which RAM8 to load to.
+    DMux8Way (in=load,
+              sel=address[3..5],
+              a=selectRam1,
+              b=selectRam2,
+              c=selectRam3,
+              d=selectRam4,
+              e=selectRam5,
+              f=selectRam6,
+              g=selectRam7,
+              h=selectRam8);
+
+    RAM8 (in=in, load=selectRam1, address=address[0..2], out=ram1Out);
+    RAM8 (in=in, load=selectRam2, address=address[0..2], out=ram2Out);
+    RAM8 (in=in, load=selectRam3, address=address[0..2], out=ram3Out);
+    RAM8 (in=in, load=selectRam4, address=address[0..2], out=ram4Out);
+    RAM8 (in=in, load=selectRam5, address=address[0..2], out=ram5Out);
+    RAM8 (in=in, load=selectRam6, address=address[0..2], out=ram6Out);
+    RAM8 (in=in, load=selectRam7, address=address[0..2], out=ram7Out);
+    RAM8 (in=in, load=selectRam8, address=address[0..2], out=ram8Out);
+
+    // Pipe only the output of the RAM8 defined by the relevant "address" bits
+    // to out.
+    Mux8Way16 (a=ram1Out,
+               b=ram2Out,
+               c=ram3Out,
+               d=ram4Out,
+               e=ram5Out,
+               f=ram6Out,
+               g=ram7Out,
+               h=ram8Out,
+               sel=address[3..5],
+               out=out);
+}

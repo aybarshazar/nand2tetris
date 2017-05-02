@@ -1,0 +1,45 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/03/b/RAM16K.hdl
+
+/**
+ * Memory of 16K registers, each 16 bit-wide. Out holds the value
+ * stored at the memory location specified by address. If load==1, then
+ * the in value is loaded into the memory location specified by address
+ * (the loaded value will be emitted to out from the next time step onward).
+ */
+
+CHIP RAM16K {
+    IN in[16], load, address[14];
+    OUT out[16];
+
+    PARTS:
+
+    // address has 14 bits. Most significant 2 bits (address[12..13]) tells us
+    // which RAM4K we'll operate on and the least significant 12 bits
+    // (address[0..11]) tells us which register in that particular RAM4K we'll
+    // use. Check the comments in RAM64K for the rationale.
+
+    // Select which RAM4K to load to.
+    DMux4Way (in=load,
+              sel=address[12..13],
+              a=selectRam1,
+              b=selectRam2,
+              c=selectRam3,
+              d=selectRam4);
+
+    RAM4K (in=in, load=selectRam1, address=address[0..11], out=ram1Out);
+    RAM4K (in=in, load=selectRam2, address=address[0..11], out=ram2Out);
+    RAM4K (in=in, load=selectRam3, address=address[0..11], out=ram3Out);
+    RAM4K (in=in, load=selectRam4, address=address[0..11], out=ram4Out);
+
+    // Pipe only the output of the RAM4K defined by the relevant "address" bits
+    // to out.
+    Mux4Way16 (a=ram1Out,
+               b=ram2Out,
+               c=ram3Out,
+               d=ram4Out,
+               sel=address[12..13],
+               out=out);
+}
