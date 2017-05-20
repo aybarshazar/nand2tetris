@@ -1,5 +1,7 @@
 Machine language
 
+Key concepts: Op codes, mnemonics, binary machine language, symbolic machine language, assembly, low-level arithmetic, logical, addressing, branching, and I/O commands, CPU emulation, low-level programming.
+
 Assembly language (symbolic code) --- Translate (Assembler) ---> Machine language (binary code) --- Execute --->
 
 - Binary code vs Symbolic mnemonics

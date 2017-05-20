@@ -1,7 +1,9 @@
 Computer architecture
 
-- Universal Turing Machine, Von Neumann Architecture, Harvard Architecture
+- Universal Turing Machine, Von Neumann Architecture, Harvard Architecture, computer design
 - Fetch - Execute cycle (instruction cycle)
+- Data bus
+- Instruction bus
 - CPU
 - The Stored Program Concept
 
