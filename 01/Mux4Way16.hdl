@@ -16,6 +16,7 @@ CHIP Mux4Way16 {
     OUT out[16];
 
     PARTS:
+
     // Select according to the first bit:
     // Select a and c if sel[0] == 0
     // Select b and d if sel[0] == 1

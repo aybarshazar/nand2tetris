@@ -10,17 +10,22 @@
  */
 
 CHIP DMux {
+    /*
+
+    Using the truth table of demultiplexer and sum of minterms, find out the
+    expressions that we should sum:
+
+    in AND NOT(sel)
+    in AND sel
+
+    Result: (in AND NOT(sel)) + (in AND sel)
+
+    */
+
     IN in, sel;
     OUT a, b;
 
     PARTS:
-    // Using the truth table of demultiplexer and sum of minterms, find out the
-    // expressions that we should sum:
-
-    // in AND NOT(sel)
-    // in AND sel
-
-    // Result: (in AND NOT(sel)) + (in AND sel)
 
     Not (in=sel, out=notSel);
     And (a=in, b=notSel, out=a);

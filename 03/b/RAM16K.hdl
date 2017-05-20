@@ -11,15 +11,19 @@
  */
 
 CHIP RAM16K {
+    /*
+
+    address has 14 bits. Most significant 2 bits (address[12..13]) tells us
+    which RAM4K we'll operate on and the least significant 12 bits
+    (address[0..11]) tells us which register in that particular RAM4K we'll
+    use. Check the comments in RAM64K for the rationale.
+
+    */
+
     IN in[16], load, address[14];
     OUT out[16];
 
     PARTS:
-
-    // address has 14 bits. Most significant 2 bits (address[12..13]) tells us
-    // which RAM4K we'll operate on and the least significant 12 bits
-    // (address[0..11]) tells us which register in that particular RAM4K we'll
-    // use. Check the comments in RAM64K for the rationale.
 
     // Select which RAM4K to load to.
     DMux4Way (in=load,

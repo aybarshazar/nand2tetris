@@ -11,35 +11,39 @@
  */
 
 CHIP RAM64 {
+    /*
+
+    address has 6 bits. Most significant 3 bits (address[3..5]) tells us
+    which RAM8 we'll operate on and the least significant 3 bits
+    (address[0..2]) tells us which register in that particular RAM8 we'll
+    use. For example:
+
+    The addresses of 8 registers in the first RAM8:
+    000 000
+    000 001
+    000 010
+    000 011
+    000 100
+    000 101
+    000 110
+    000 111
+
+    The addresses of 8 registers in the second RAM8:
+    001 000
+    001 001
+    001 010
+    001 011
+    001 100
+    001 101
+    001 110
+    001 111
+
+    */
+
     IN in[16], load, address[6];
     OUT out[16];
 
     PARTS:
-
-    // address has 6 bits. Most significant 3 bits (address[3..5]) tells us
-    // which RAM8 we'll operate on and the least significant 3 bits
-    // (address[0..2]) tells us which register in that particular RAM8 we'll
-    // use. For example:
-
-    // The addresses of 8 registers in the first RAM8:
-    // 000 000
-    // 000 001
-    // 000 010
-    // 000 011
-    // 000 100
-    // 000 101
-    // 000 110
-    // 000 111
-
-    // The addresses of 8 registers in the second RAM8:
-    // 001 000
-    // 001 001
-    // 001 010
-    // 001 011
-    // 001 100
-    // 001 101
-    // 001 110
-    // 001 111
 
     // Select which RAM8 to load to.
     DMux8Way (in=load,

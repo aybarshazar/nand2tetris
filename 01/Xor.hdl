@@ -9,28 +9,31 @@
  */
 
 CHIP Xor {
+    /*
+
+    Using sum of minterms (aka Sum of Products)
+    From the truth table, we look for the rows where the output is 1. Then,
+    for each of those rows, we try to find a product expression that makes
+    only that row 1. For example, for the row:
+    a  b  out
+    0  1   1
+    The required expression would be: NOT(A) AND B
+    We find these expressions for every row that has an output of 1. Then
+    the overall boolean expression of the truth table can be found by
+    summing up (i.e. OR operation) each of these expressions.
+
+    Also check out product of maxterms (aka Product of Sums)
+    Source: https://en.wikipedia.org/wiki/Canonical_normal_form
+
+    Result for the Xor gate:
+    (NOT(a) AND b) OR (NOT(b) AND a)
+
+    */
+
     IN a, b;
     OUT out;
 
     PARTS:
-    // Put your code here:
-
-    // Using sum of minterms (aka Sum of Products)
-    // From the truth table, we look for the rows where the output is 1. Then,
-    // for each of those rows, we try to find a product expression that makes
-    // only that row 1. For example, for the row:
-    // a  b  out
-    // 0  1   1
-    // The required expression would be: NOT(A) AND B
-    // We find these expressions for every row that has an output of 1. Then
-    // the overall boolean expression of the truth table can be found by
-    // summing up (i.e. OR operation) each of these expressions.
-
-    // Also check out product of maxterms (aka Product of Sums)
-    // Source: https://en.wikipedia.org/wiki/Canonical_normal_form
-
-    // Result for the Xor gate:
-    // (NOT(a) AND b) OR (NOT(b) AND a)
 
     Not (in=a, out=notA);
     Not (in=b, out=notB);

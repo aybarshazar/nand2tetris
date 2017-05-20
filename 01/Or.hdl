@@ -14,32 +14,39 @@ CHIP Or {
     OUT out;
 
     PARTS:
-    // Result:
-    // NOT(a) NAND NOT(b)
+    /*
+
+    Result:
+    NOT(a) NAND NOT(b)
+
+    */
 
     Not (in=a, out=notA);
     Not (in=b, out=notB);
     Nand (a=notA, b=notB, out=out);
 
+    /*
 
-    // Another way to do it. A Not gate is made with a Nand gate where you feed
-    // the same source to both inputs of the gate. So we can make an OR gate
-    // with 3 Nand gates:
+    Another way to do it. A Not gate is made with a Nand gate where you feed
+    the same source to both inputs of the gate. So we can make an OR gate
+    with 3 Nand gates:
 
-    // Result:
-    // (a NAND a) NAND (b NAND b)
+    Result:
+    (a NAND a) NAND (b NAND b)
 
-    // Nand (a=a, b=a, out=aNanda);
-    // Nand (a=b, b=b, out=bNandb);
-    // Nand (a=aNanda, b=bNandb, out=out);
+    Nand (a=a, b=a, out=aNanda);
+    Nand (a=b, b=b, out=bNandb);
+    Nand (a=aNanda, b=bNandb, out=out);
 
 
-    // One more way to do it:
-    // Result:
-    // NOT (NOT(a) AND NOT(b))
+    One more way to do it:
+    Result:
+    NOT (NOT(a) AND NOT(b))
 
-    // Not (in=a, out=notA);
-    // Not (in=b, out=notB);
-    // And (a=notA, b=notB, out=notAAndnotB);
-    // Not (in=notAAndnotB, out=out);
+    Not (in=a, out=notA);
+    Not (in=b, out=notB);
+    And (a=notA, b=notB, out=notAAndnotB);
+    Not (in=notAAndnotB, out=out);
+
+    */
 }

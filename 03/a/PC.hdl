@@ -12,16 +12,20 @@
  */
 
 CHIP PC {
+    /*
+
+    The priority of the operations according to the specification above is
+    as follows: reset > load > increment
+    So we apply the increment first, apply load second, then apply reset.
+
+    Also check out: http://nand2tetris-questions-and-answers-forum.32033.n3.nabble.com/PC-Hdl-td4026543.html
+
+    */
+
     IN in[16], load, inc, reset;
     OUT out[16];
 
     PARTS:
-
-    // The priority of the operations according to the specification above is
-    // as follows: reset > load > increment
-    // So we apply the increment first, apply load second, then apply reset.
-
-    // Also check out: http://nand2tetris-questions-and-answers-forum.32033.n3.nabble.com/PC-Hdl-td4026543.html
 
     Inc16 (in=feedback, out=incrementedFeedback);
     Mux16 (a=feedback, b=incrementedFeedback, sel=inc, out=incrementOut);

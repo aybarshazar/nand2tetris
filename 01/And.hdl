@@ -10,14 +10,17 @@
  */
 
 CHIP And {
+    /*
+
+    Result:
+    NOT (a NAND b)
+
+    */
+
     IN a, b;
     OUT out;
 
     PARTS:
-    // Put your code here:
-
-    // Result:
-    // NOT (a NAND b)
 
     Nand (a=a, b=b, out=aNandb);
     Not (in=aNandb, out=out);

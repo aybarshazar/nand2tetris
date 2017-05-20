@@ -11,15 +11,19 @@
  */
 
 CHIP RAM512 {
+    /*
+
+    address has 9 bits. Most significant 3 bits (address[6..8]) tells us
+    which RAM64 we'll operate on and the least significant 6 bits
+    (address[0..5]) tells us which register in that particular RAM64 we'll
+    use. Check the comments in RAM64 for the rationale.
+
+    */
+
     IN in[16], load, address[9];
     OUT out[16];
 
     PARTS:
-
-    // address has 9 bits. Most significant 3 bits (address[6..8]) tells us
-    // which RAM64 we'll operate on and the least significant 6 bits
-    // (address[0..5]) tells us which register in that particular RAM64 we'll
-    // use. Check the comments in RAM64 for the rationale.
 
     // Select which RAM64 to load to.
     DMux8Way (in=load,
